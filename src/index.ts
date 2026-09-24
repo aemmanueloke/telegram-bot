@@ -52,14 +52,14 @@ async function main(): Promise<void> {
     `[boot] rpc ok, status=${health.status} ledgers ${health.oldestLedger}..${health.latestLedger}`,
   );
 
-  // Generate SBOM for supply-chain transparency and auditability.
-  // This is non-blocking relative to the bot's operational readiness,
-  // but we log success/failure to aid debugging during deployment.
+  // Generate SBOM for supply chain transparency and Mimir notifier reliability.
+  // This is a read-only operation that does not affect runtime behavior.
   try {
     const sbom = await generateSBOM();
     console.log(`[boot] sbom generated, sha256=${sbom.sha256}`);
   } catch (err) {
-    console.warn(`[boot] sbom generation failed (non-fatal):`, err);
+    // SBOM generation is best-effort; failure does not prevent the bot from running.
+    console.error(`[warn] sbom generation failed:`, err);
   }
 
   // The bot needs the poller's status and the poller needs the bot's send path,
