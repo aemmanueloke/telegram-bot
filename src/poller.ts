@@ -50,6 +50,8 @@ export interface PollerStatus {
   consecutiveFailures: number;
   lastError: { at: number; message: string } | null;
   targets: TargetState[];
+  /** SHA-256 digest of the SBOM generated for this deployment image. */
+  sbomDigest: string | null;
 }
 
 interface CursorFile {
@@ -103,6 +105,7 @@ export function createPoller(deps: PollerDeps) {
     consecutiveFailures: 0,
     lastError: null,
     targets: [],
+    sbomDigest: null,
   };
 
   let timer: NodeJS.Timeout | null = null;
@@ -293,6 +296,14 @@ export function createPoller(deps: PollerDeps) {
           `every ${config.pollIntervalMs}ms`,
       );
       void loop();
+    },
+
+    /**
+     * Attach the SBOM digest for operational reporting.
+     * This is typically set once at startup by the deployment wrapper.
+     */
+    setSbomDigest(digest: string): void {
+      status.sbomDigest = digest;
     },
 
     stop(): void {

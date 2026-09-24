@@ -10,6 +10,7 @@ import { ConfigError, loadConfig, networkLabel } from "./config.js";
 import { createBot, createNotifier, registerCommands } from "./bot.js";
 import { createPoller } from "./poller.js";
 import { createRpcServer } from "./stellar/client.js";
+import { generateSBOM } from "./sbom.js";
 
 /**
  * Installed before anything else can throw, so a rejection during startup is
@@ -50,6 +51,16 @@ async function main(): Promise<void> {
   console.log(
     `[boot] rpc ok, status=${health.status} ledgers ${health.oldestLedger}..${health.latestLedger}`,
   );
+
+  // Generate SBOM for supply-chain transparency and auditability.
+  // This is non-blocking relative to the bot's operational readiness,
+  // but we log success/failure to aid debugging during deployment.
+  try {
+    const sbom = await generateSBOM();
+    console.log(`[boot] sbom generated, sha256=${sbom.sha256}`);
+  } catch (err) {
+    console.warn(`[boot] sbom generation failed (non-fatal):`, err);
+  }
 
   // The bot needs the poller's status and the poller needs the bot's send path,
   // so one edge of the cycle is late-bound. This one, because it is the only
