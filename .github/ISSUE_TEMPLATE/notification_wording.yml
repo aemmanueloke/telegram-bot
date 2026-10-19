@@ -1,0 +1,70 @@
+name: Notification wording change
+description: Request a specific change to the wording of a notification.
+title: "[Wording]: "
+labels: ["area/telegram"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for raising a wording change request!
+        Please be specific about the event, the current text, the proposed text and the reason.
+
+  - type: dropdown
+    id: event_name
+    attributes:
+      label: Event name
+      description: Select the event whose notification wording should change.
+      options:
+        - Market created
+        - Market resolved
+        - Market closing soon
+        - Market cancelled
+        - Market disputed
+        - Squad created
+        - Squad member joined
+        - Squad member left
+        - Squad resolved
+        - Other (describe in rationale)
+      validations:
+        required: true
+
+  - type: textarea
+    id: current_text
+    attributes:
+      label: Current text
+      description: Paste the exact notification text as it appears today.
+      placeholder: |
+        e.g. "Market created: Will the Team A beat Team B?"
+      render: text
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposed_text
+    attributes:
+      label: Proposed text
+      description: Provide the exact wording you would like to see instead.
+      placeholder: |
+        e.g. "New market: Will Team A beat Team B?"
+      render: text
+    validations:
+      required: true
+
+  - type: textarea
+    id: rationale
+    attributes:
+      label: Rationale
+      description: Explain why this wording is better (clarity, consistency, tone, etc.).
+      render: text
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: confirmations
+    attributes:
+      label: Confirmation
+      options:
+        - label: I have searched existing issues and did not find a duplicate.
+          required: true
+        - label: This request is limited to notification wording and does not change other templates.
+          required: true
