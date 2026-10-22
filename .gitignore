@@ -8,6 +8,7 @@ dist/
 
 # Runtime state: the poller's last-seen cursor. The directory is tracked
 # (data/.gitkeep), the state file is not.
+temp_auto_push.bat
 data/*
 !data/.gitkeep
 
@@ -17,7 +18,6 @@ npm-debug.log*
 .DS_Store
 Thumbs.db
 .idea/
-.vscode/*
-!.vscode/launch.json
-!.vscode/extensions.json
 *.tsbuildinfo
+.gitignore
+branch_structure.json

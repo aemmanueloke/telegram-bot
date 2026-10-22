@@ -1,0 +1,63 @@
+name: Notification wording change
+description: Request a specific change to the wording of a notification.
+title: "[Wording]: <event> — <current text> → <proposed text>"
+labels: ["area/telegram"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for suggesting a wording change! Please be specific so we can act on it quickly.
+        Provide the event, the current text, the proposed text, and the rationale.
+
+  - type: dropdown
+    id: event
+    attributes:
+      label: Event
+      description: Select the notification event whose wording should change.
+      options:
+        - Market created
+        - Market resolved
+        - Market closing soon
+        - Market disputed
+        - Market cancelled
+        - Squad created
+        - Squad member joined
+        - Squad member left
+        - Squad resolved
+        - Other (describe in rationale)
+      validations:
+        required: true
+
+  - type: textarea
+    id: current_text
+    attributes:
+      label: Current text
+      description: Paste the exact text that is currently sent for this event.
+      placeholder: The market has resolved to YES]
+      validations:
+        required: true
+
+  - type: textarea
+    id: proposed_text
+    attributes:
+      label: Proposed text
+      description: Provide the exact text you would like sent instead.
+      placeholder: The market has resolved to YES] ✅ congratulations!
+      validations:
+        required: true
+
+  - type: textarea
+    id: rationale
+    attributes:
+      label: Rationale
+      description: Explain why this wording is better (clarity, tone, consistency, etc.).
+      validations:
+        required: true
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Confirmation
+      options:
+        - label: I have provided the event, current text, proposed text, and rationale.
+          required: true
